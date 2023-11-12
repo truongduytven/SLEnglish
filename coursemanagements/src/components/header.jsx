@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,10 +12,54 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
 
 const pages = ['Courses', 'Teachers', 'Certificate'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: '30px',
+  backgroundColor: 'white',
+  '&:hover': {
+    backgroundColor: 'white',
+  },
+  marginLeft: 0,
+  marginRight: '100px',
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+  border: '0.5px solid black'
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'black',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,7 +81,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" className='max-w-full' sx={{backgroundColor: 'transparent', boxShadow:'none'}}>
+    <AppBar position="fixed" className='max-w-full' sx={{backgroundColor: 'transparent', boxShadow:'none', top:'0', left: '0'}}>
       <Container>
         <Toolbar disableGutters>
           <Typography
@@ -97,7 +142,7 @@ function Header() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -116,12 +161,26 @@ function Header() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, mx: 2, color: 'black', display: 'block' }}
+                sx={{ my: 2, mx: 1, color: 'black', display: 'block', textTransform: 'none', fontSize:'18px', px:3 ,borderRadius: '30px' ,'&:hover' : {
+                  backgroundColor: '#F5601D',
+                  color: 'white',
+                },}}
               >
                 {page}
               </Button>
             ))}
           </Box>
+
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon sx={{color: 'black'}}/>
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              color='black'
+            />
+          </Search>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
